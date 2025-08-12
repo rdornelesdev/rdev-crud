@@ -1,0 +1,18 @@
+# Ignora o node modules
+node_modules/
+
+# regras para a pasta frontend
+frontend/.next/
+frontend/out/
+frontend/.env/local
+
+# regras para a pasta backend
+backend/dist/
+backend/build/
+backend/.env
+
+# regras globais
+.DS_Store
+*.log
+npm-debug.log*
+

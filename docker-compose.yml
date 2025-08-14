@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # Serviço do Banco de Dados PostgreSQL
+  db:
+    image: postgres:16-alpine
+    container_name: rdev-crud-db
+    restart: always
+    ports:
+      - "${PORT_DB_LEFT}:${PORT_DB_RIGHT}" # Mapeia a porta do seu computador para o container
+    environment:
+      POSTGRES_USER: ${USERNAME_USERNAME}
+      POSTGRES_PASSWORD: ${PASSWORD_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ${VOLUMES_POSTGRES} # Persistência dos dados
+
+  # Serviço do Back-end (Node.js + Prisma)
+  back:
+    build:
+      context: ./backend # O contexto de construção aponta para a pasta 'backend'
+      dockerfile: Dockerfile
+    container_name: rdev-crud-back
+    restart: always
+    ports:
+      - "${PORT_BACK}:${PORT_BACK}" # Mapeia a porta do back-end
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    volumes:
+      - ./backend:/app # Sincroniza o código local com o container para desenvolvimento
+    depends_on:
+      - db
+
+  # Serviço do Front-end (Next.js)
+  front:
+    build:
+      context: ./frontend # O contexto de construção aponta para a pasta 'frontend'
+      dockerfile: Dockerfile
+    container_name: rdev-crud-front
+    restart: always
+    ports:
+      - "${PORT_FRONT}:${PORT_FRONT}" # Mapeia a porta do Next.js
+    volumes:
+      - ./frontend:/app # Sincroniza o código local
+      - /app/node_modules # Evita que a pasta node_modules local sobrescreva a do container
+    depends_on:
+      - back # Garante que o front-end só inicie após o back-end
+    
+volumes:
+  postgres_data: {}

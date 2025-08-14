@@ -16,3 +16,5 @@ backend/.env
 *.log
 npm-debug.log*
 
+#Ignorar .env
+.env

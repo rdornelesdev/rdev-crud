@@ -28,6 +28,8 @@ services:
       DATABASE_URL: ${DATABASE_URL}
     volumes:
       - ./backend:/app # Sincroniza o código local com o container para desenvolvimento
+    env_file: 
+      - ./backend/.env
     depends_on:
       - db
 

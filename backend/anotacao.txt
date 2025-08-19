@@ -1,0 +1,40 @@
+no backend especificamente na function updateUser eu preciso usar partial
+
+Partial nada mais é que transformar as propriedades da interface opcional 
+e pq isso? pq se eu nao deixar opcional ele vai obrigar o usuário a alterar todas as propriedades.
+
+exemplo de syntax funcional e completa
+
+interface IUser = {
+    nome: string;
+    email: string;
+    senha: string;
+}
+
+// O tipo de dados que sua função update irá receber.
+// Ele torna os campos da interface IUser OPCIONAIS
+// type IUpdateData = Partial<IUser>;
+
+async function updateUser(id: number, data: Partial<IUser>): Promise<User> {
+  // 2. Separe o ID da lógica de dados
+  // O ID já é passado como um argumento separado
+
+  // Crie um objeto de dados para a atualização
+  const updateData: Partial<IUser> = { ...data };
+
+  // 3. Verifique se a senha foi fornecida antes de hachurá-la
+  if (data.senha) {
+    const senhaHash = await argon2.hash(data.senha);
+    updateData.senha = senhaHash;
+  }
+
+  const update = await prismaClient.user.update({
+    where: {
+      id: id,
+    },
+    // Use o objeto 'updateData' que agora só contém os campos que serão alterados
+    data: updateData
+  });
+
+  return update;
+}

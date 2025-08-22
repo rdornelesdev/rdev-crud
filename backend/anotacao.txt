@@ -38,3 +38,31 @@ async function updateUser(id: number, data: Partial<IUser>): Promise<User> {
 
   return update;
 }
+-----------------------
+
+no model -> verificação (login/register)
+no controller -> criação (register)
+no middleware -> validação do token
+
+
+💡 Minha recomendação pessoal para aplicações com usuários finais é:
+ Cookie + JWT + Sessão
+Esse modelo permite:
+• Expiração controlada por atividade
+• Revogação por dispositivo
+• Validação contextual por fingerprint (IP, navegador, OS, etc.)
+A geração do fingerprint pode ser feita com um hash de dados do client, e a validação de risco pode usar pontuação com base no caso de uso.
+Tokens ainda fazem sentido para integrações e APIs, mas isso não significa que são a melhor escolha para login de usuários.
+
+libs pra isso: 
+  - jsonwebtoken -> para criar e verificar jwts
+  - express-cookie-parser -> para ler cookies do cliente
+  - gerar hashs (ja temos, argon2)
+  - modelo de Sessao no Prisma
+
+JWT: Funciona como chave de acesso. Contém as informações do usuário (como id, email) e uma expiração curta.
+
+Cookie: é o veículo seguro que transporta o JWT do servidor para o cliente e vice-versa. Por ser httpOnly, o javascript do frontend nao consegue acessá-lo.
+-> npm install -D @types/express @types/cookie-parser @types/jsonwebtoken
+
+Sesão (no banco): É o registro do estado. O servidor guarda um registro em cada sessão ativa. Isso permite rastrear o último acesso, o fingerprint e, principalmente, revogar a sessão.

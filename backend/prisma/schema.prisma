@@ -17,12 +17,29 @@ datasource db {
 
 // Tabelas e Colunas 
 
+// --- IMPORTANTE --- 
+// sempre que criarmos alguma nova tabela, no env, devemos usar o localhost no lugar do db e usar a porta 5434, e depois dar um npx prisma migrate --name nome_migrate. Depois de ter feito volta para db e 5432. Isso se da pq o host db só existe na rede interna do docker
+
 // usuarios
 model User {
   id Int @id @default(autoincrement())
   nome String
   email String @unique
   senha String
+  sessoes Sessao[] // campo de relação do lado do User. o [] indica que o usuário pode ter múltiplas sessões (uma pra cadadispositvo por ex)
+  // com essa linha, podemos buscar o usuário e tdas as suas sessões com um único comando do prisma: await prisma.user.findUnique({where: {id: 1}, include: {sessoes: true} })
+}
+
+// Sessao para armazenar no banco
+model Sessao {
+  id  String @id @default(uuid())
+  usuarioId Int
+  fingerprint String 
+  ultimoAcesso DateTime @default(now())
+  expiracao DateTime 
+  usuario User @relation(fields: [usuarioId], references: [id])
+  // usuario User -> campo de relação. nao é armazenado no banco de dados, mas é um campo virtual que o prisma adiciona ao modelo. Permite acessar todos os dados do usuário a partir de uma sessão ex: minhaSessao.usuario.nome
+  // resumo: o prisma entende que a tabela sessao terá a coluna usuarioId que armazenará o ID de uma linha na tabela User
 }
 
 

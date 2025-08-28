@@ -1,6 +1,7 @@
 import express from 'express';
 import { router } from './routes.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 
 // chamando o express
@@ -11,6 +12,9 @@ app.use(express.json());
 
 // liberar que mais ip's faça requests
 app.use(cors());
+
+// middleware de cookie-parser; para evitar o erro de typerror cannot destructure token from req.cookies
+app.use(cookieParser());
 
 app.use(router);
 

@@ -21,6 +21,7 @@ class UserModel {
     //     throw new Error('email incorreto!');
     // }
 
+    // procura o primeiro registro com esse email na consulta do banco
     const validateUser = await prismaClient.user.findFirst({
       where: {
         email: email,
@@ -31,8 +32,10 @@ class UserModel {
       throw new Error("Este usuário já existe.");
     }
 
+    // gera um hash da senha com argon2 (que vai ser salvo no banco)
     const senhaHash = await argon2.hash(senha);
 
+    // cria o user no banco salvando nome, email e a senha ja hasheada
     const createUser = await prismaClient.user.create({
       data: {
         nome: nome,
@@ -65,6 +68,7 @@ class UserModel {
   async getUsersByID({id}: IUserId){ 
     try{
       
+      // findUnique - procura por chave única (id)
       const getUserByID = await prismaClient.user.findUnique({
         select:{
           nome: true,
@@ -84,6 +88,7 @@ class UserModel {
 
   // update user
   async updateUser(id: number, data: Partial<IUser>){
+    // partial significa que todas as props são opcionais (pode vir nome ou só o email, etc)
     
     const dadosUsuario: Partial<IUser> = {...data};
 

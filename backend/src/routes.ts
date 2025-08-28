@@ -3,6 +3,7 @@ import {Router} from 'express';
 // Usuarios
 import {UserController} from './controllers/users/UserController.js';
 import {login} from './controllers/auth/login.js'; 
+import { logout } from './controllers/auth/logout.js';
 
 const router = Router();
 
@@ -14,7 +15,10 @@ router.put('/users/:id', new UserController().updateUser);
 router.delete('/users/:id', new UserController().deleteUser);
 
 
-// O Login 
-router.post('/auth/login', login);
+// Login 
+router.post('/login', login);
+// logout
+router.post('/logout', logout)
+
 
 export { router };

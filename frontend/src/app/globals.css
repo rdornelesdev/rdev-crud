@@ -1,13 +1,15 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --background: #242424;
+  --menu-color: #3d3d3d;
+  --line-color: #4f4f4f;
+  --red: #e8333e;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-color: #f4f4f4;
+  --font-pp: 12px;
+  --font-p: 14px;
+  --font-m: 18px;
+  --font-g: 22px;
+  --font-xg: 32px;
 }
 
 html,
@@ -35,8 +37,8 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.icons {
+  color: #f4f4f4;
+  height: 50px;
+  width: 50px;
 }

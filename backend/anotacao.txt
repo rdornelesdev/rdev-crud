@@ -66,3 +66,32 @@ Cookie: é o veículo seguro que transporta o JWT do servidor para o cliente e v
 -> npm install -D @types/express @types/cookie-parser @types/jsonwebtoken
 
 Sesão (no banco): É o registro do estado. O servidor guarda um registro em cada sessão ativa. Isso permite rastrear o último acesso, o fingerprint e, principalmente, revogar a sessão.
+
+-----------------
+
+quando alterar alguma coluna no banco pelo schema.prisma usamos isso:
+
+npx prisma migrate dev --name add_novas_colunas
+npx prisma generate - atualizar o prisma
+
+migrate -> arquivo de instruções
+
+para funcionar no nosso projeto:
+  docker-compose exec back npx prisma migrate dev --name users
+
+exec -> executar um comando em um container ativo 
+back -> nome do serviço (o prisma depende do backend pra funcionar, e esse "back" ta no docker-compose.yml)
+
+e para o generate:
+  docker-compose exec back npx prisma generate
+
+  -------------
+
+? em TypeScript (Date?) significa Date | undefined
+
+? no Prisma (DateTime?) significa Date | string | null
+
+undefined !== null, então o TypeScript trava
+
+Usar ?? null resolve (fallback)
+

@@ -24,7 +24,12 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
   nome String
+  dt_nascimento DateTime?
   email String @unique
+  telefone String?
+  cpf String?
+  cnpj String?
+  endereco String?
   senha String
   sessoes Sessao[] // campo de relação do lado do User. o [] indica que o usuário pode ter múltiplas sessões (uma pra cadadispositvo por ex)
   // com essa linha, podemos buscar o usuário e tdas as suas sessões com um único comando do prisma: await prisma.user.findUnique({where: {id: 1}, include: {sessoes: true} })

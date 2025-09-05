@@ -1,16 +1,23 @@
-import styles from "./page.module.scss";
-import Header from '../components/header';
+import styles from "./page.module.css";
+import Header from '../components/header/Header';
+import DataUsersPage from '../components/users';
 
 export default function Home() {
   return (
-    <div>
-      <Header />
+    <div className={styles.container}>
+      <header className={styles.verticalHeader}>
+        <Header />
+      </header>
 
-      <main>
+      <div className={styles.mainFooterContainer}>
+        <main className={styles.mainContent}>
+          <DataUsersPage />
+        </main>
 
-      </main>
-      <footer>       
-      </footer>
+        <footer className={styles.pageFooter}>
+          <h1>Desenvolvido por <span className={styles.rd}>Ramon Dorneles</span></h1>       
+        </footer>
+      </div>
     </div>
   );
 }

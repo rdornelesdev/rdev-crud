@@ -18,8 +18,8 @@ export default function Header() {
         <ul>
           <li>
             <User />
-            <Link href="/usuario">
-                Ações do Usuário
+            <Link href="/suporte">
+                Suporte
             </Link>
           </li>
           <li>

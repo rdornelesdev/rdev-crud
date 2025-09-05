@@ -1,6 +1,6 @@
 .headerConfig {
   color: var(--font-color);
-  width: 30%;
+  /* width: 30%; */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -56,11 +56,10 @@
 }
 
 .logout-container div {
-  padding: 20px 5px 5px 10px;
+  padding: 20px 5px 5px 1px;
 }
 
 .logo-usuario img {
-  border: 2px solid var(--background);
   border-radius: 50%;
   cursor: pointer;
   transition: transform 0.3s;

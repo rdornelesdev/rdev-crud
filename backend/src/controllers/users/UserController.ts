@@ -5,13 +5,19 @@ class UserController {
 
   // creating new user
   async create(req: Request, res: Response) {
-    const { nome, email, senha } = req.body;
+    const { nome, dt_nascimento, email, telefone, cpf, cnpj, endereco, senha } = req.body;
 
+    
     const userModel = new UserModel();
-
+    
     const createUserModel = await userModel.create({
       nome,
+      dt_nascimento,
       email,
+      telefone,
+      cpf,
+      cnpj,
+      endereco,
       senha,
     });
 
@@ -42,10 +48,10 @@ class UserController {
     // pega o id da url
     const {id} = req.params;
 
-    const {nome, email, senha} = req.body;
+    const {nome, dt_nascimento, email, telefone, cpf, cnpj, endereco, senha } = req.body;
 
     const updateUserModel = new UserModel();
-    const updateUser = updateUserModel.updateUser(Number(id), {nome, email, senha})
+    const updateUser = updateUserModel.updateUser(Number(id), {nome, dt_nascimento, email, telefone, cpf, cnpj, endereco, senha})
 
     return res.json(updateUser);
   }

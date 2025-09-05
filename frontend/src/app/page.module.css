@@ -1,4 +1,72 @@
-body{
-    background-color: var(--background);
+
+
+.container {
+    display: grid;
+    height: 100vh;
+    gap: 10px;
+
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 1fr auto;
+
+    /* nomes para desenhar o layout da pagina */
+}
+
+.verticalHeader {
+    width: 260px;
+    flex-grow: 1;
+}
+
+.mainFooterContainer {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.mainFooterContainer main{
+    flex-grow: 1;
+}
+
+.mainFooterContainer footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--menu-color);
+    height: 10.5%;
     color: var(--font-color);
+    font-size: var(--font-minuscula);
+    font-weight: normal;
+}
+
+/* Ramon Dorneles */
+
+/* animação que move o gradiente */
+@keyframes sweep-color {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.rd{
+    background: linear-gradient(
+        to right, 
+        var(--font-color) 0%, 
+        var(--font-color) 40%,
+        var(--red) 50%,
+        var(--font-color) 60%, 
+        var(--font-color) 100%
+    );
+    
+    /* Aumentar o tamanho do gradiente para cobrir mais espaço */
+    background-size: 400% 100%;
+    
+    /* Faz o fundo aparecer somente onde tem texto */
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+
+    /* Aplica a animação para mover o gradiente */
+    animation: sweep-color 4s linear infinite; 
 }

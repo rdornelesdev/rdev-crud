@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import prismaClient from "../../prismaExtension/prisma.js";
 import jwt from 'jsonwebtoken';
 
-export async function logout(req: Request, res: Response) { // CORRIGIDO: adicionado 'export'
+export async function logout(req: Request, res: Response) {
 
     // pegando o cookie chamado 'token'
     const { token } = req.cookies;

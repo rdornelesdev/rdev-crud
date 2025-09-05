@@ -3,7 +3,12 @@ import argon2 from "argon2";
 
 interface IUser {
   nome: string;
+  dt_nascimento: Date | null;
   email: string;
+  telefone: string;
+  cpf: string;
+  cnpj: string;
+  endereco: string;
   senha: string;
 }
 
@@ -16,7 +21,7 @@ type IUserProps = IUser & IUserId;
 class UserModel {
 
   // create users
-  async create({ nome, email, senha }: IUser) {
+  async create({ nome, dt_nascimento, email, telefone, cpf, cnpj, endereco, senha }: IUser) {
     // if(!email) {
     //     throw new Error('email incorreto!');
     // }
@@ -39,10 +44,16 @@ class UserModel {
     const createUser = await prismaClient.user.create({
       data: {
         nome: nome,
-        email: email,
+        dt_nascimento: dt_nascimento ?? null,
+        email: email ?? null,
+        telefone: telefone ?? null,
+        cpf: cpf ?? null,
+        cnpj: cnpj ?? null,
+        endereco: endereco ?? null,
         senha: senhaHash,
       },
     });
+    // os trezentos null é pq ele é opcional no prisma e o prisma nao trata como undefined mas sim como null, então converto undefined do typescript para null igual no prisma
 
     return createUser;
   }
@@ -54,10 +65,15 @@ class UserModel {
         select: {
           id: true,
           nome: true,
-          email: true
+          dt_nascimento: true,
+          email: true,
+          telefone: true,
+          cpf: true,
+          cnpj: true,
+          endereco: true
         },
       });
-
+      
       return listUsers;
     } catch (error) {
       console.error(error);
@@ -100,7 +116,12 @@ class UserModel {
       }, 
       data: {
         nome: dadosUsuario.nome ?? '',
+        dt_nascimento: dadosUsuario.dt_nascimento ?? '',
         email: dadosUsuario.email ?? '',
+        telefone: dadosUsuario.telefone ?? '',
+        cpf: dadosUsuario.cpf ?? '',
+        cnpj: dadosUsuario.cnpj ?? '',
+        endereco: dadosUsuario.endereco ?? '',
         senha: hashSenha
       }
     })
